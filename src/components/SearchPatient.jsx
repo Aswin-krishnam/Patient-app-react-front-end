@@ -14,6 +14,20 @@ const SearchPatient = () => {
         setData({ ...data, [event.target.name]: event.target.value })
     }
 
+    const deletePatient=(id)=>{
+        const input= { "_id":id }
+        axios.post("http://localhost:8080/delete",input).then(
+            (response)=>{
+                console.log(response.data)
+                if (response.data.status=="success") {
+                    alert("Successfully Deleted")
+                } else {
+                    alert("Error in deletion")
+                }
+            }
+
+        )
+    }
 
     const readValue = () => {
         console.log(data)
@@ -65,6 +79,7 @@ const SearchPatient = () => {
                                     <th scope="col">Gender</th>
                                     <th scope="col">Blood Group</th>
                                     <th scope="col">Booking Date</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,6 +95,7 @@ const SearchPatient = () => {
                                                 <td>{value.gender}</td>
                                                 <td>{value.bloodGroup}</td>
                                                 <td>{value.bDate}</td>
+                                                <td><button className="btn btn-danger" onClick={()=>{deletePatient(value._id)}}>Delete</button></td>
 
                                             </tr>
                                         }
